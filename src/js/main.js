@@ -25,14 +25,6 @@ function loadRecursive(context) {
 $(function(){
   loadRecursive(document.body);
 
-  // // <div data-include="printer.html"></div>
-
-  // $.get("printer.html",function(data, textStatus) {
-
-  //   $("#printers").append(data);
-
-
-  // },"html");
 
   
 
