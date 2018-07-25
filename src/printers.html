@@ -1,145 +1,45 @@
-<!-- Section: Team v.4 -->
 <section class="my-5">
   <a name="printers"></a>
-  <!-- Section heading -->
-  <!-- <h2 class="h1-responsive font-weight-bold text-center my-5">3D-Printers</h2> -->
-  <!-- Section description -->
-<!--   <p class="grey-text text-center w-responsive mx-auto mb-5">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugit, error amet numquam iure provident voluptate esse quasi, veritatis totam voluptas nostrum quisquam eum porro a pariatur veniam.</p>
- -->
-
- <h1>Printers</h1>
-
-
-  <!-- Grid row -->
-  <div id="printers" class="row bg-white pt-4 pb-4">
-
-
-    <!-- <div data-include="printer.html"></div>
-    <div data-include="printer.html"></div>
-    <div data-include="printer.html"></div>
-    <div data-include="printer.html"></div>
-    <div data-include="printer.html"></div> -->
-
-
-  </div>
-  <!-- Grid row -->
-
+  <h1>Printers</h1>
+  <div id="printers" class="row bg-white pt-4 pb-4"></div>
 </section>
-<!-- Section: Team v.4 -->
 
 <script>
 
+function updatePrinters(tpl, printers) {
+  for (var i in printers) {
+    var printerTemplate = $(tpl).clone();
 
-    // // <div data-include="printer.html"></div>
+    $(printerTemplate).find(".card-img-top").attr('src',printers[i].printerIcon);
+    $(printerTemplate).find(".avatar img").attr('src',printers[i].filamentIcon);
+    $(printerTemplate).find(".chip img").attr('src',printers[i].jobIcon);
+    $(printerTemplate).find(".chip img").attr('src',printers[i].jobIcon);
+    $(printerTemplate).find(".card-body h4").html(printers[i].statusText);
+    $(printerTemplate).find(".chip span").html(printers[i].jobTitle);
+    $(printerTemplate).find(".progress-bar").css('width',printers[i].progress + '%');
 
-  $.get("printer.html",function(data, textStatus) {
-
-    var printers = [
-      {  
-        name: "Printer #1",
-        printerIcon: "img/printers/i3mini.png", //printer
-        filamentIcon: "img/filament/red.png", //filament
-        jobIcon: "img/sketches/1sq.png", //autootje
-        jobTitle: "autootje",
-        progress: "45",
-        statusText: "Bezig met printen..."
-      },
-      {  
-        name: "Printer #2",
-        printerIcon: "img/printers/um2go.jpg",
-        filamentIcon: "img/filament/yellow.png",
-        jobIcon: "img/sketches/5sq.png",
-        jobTitle: "robot",
-        statusText: "Opwarmen tot 230&deg;",
-        progress: "80",
-      },
-      {  
-        name: "Printer #3",
-        printerIcon: "img/printers/malyan.jpg",
-        filamentIcon: "img/filament/light-blue.png",
-        jobIcon: "img/sketches/5sq.png",
-        jobTitle: "robot",
-        statusText: "Bezig met printen...",
-        progress: "0%",
-      },
-      {  
-        name: "Printer #1",
-        printerIcon: "img/printers/i3mini.png", //printer
-        filamentIcon: "img/filament/red.png", //filament
-        jobIcon: "img/sketches/1sq.png", //autootje
-        jobTitle: "autootje",
-        progress: "45",
-        statusText: "Bezig met printen..."
-      },
-      {  
-        name: "Printer #3",
-        printerIcon: "img/printers/um2go.jpg",
-        filamentIcon: "img/filament/light-green.png",
-        jobIcon: "img/transparent-grid.png",
-        jobTitle: "Beschikbaar",
-        status: "idle",
-        statusText: "Klaar!",
-        progress: "0%",
-      },
-      {  
-        name: "Printer #3",
-        printerIcon: "img/printers/i3mini.jpg",
-        filamentIcon: "img/filament/pink.png",
-        jobIcon: "img/transparent-grid.png",
-        jobTitle: "Beschikbaar",
-        status: "idle",
-        statusText: "Klaar!",
-        progress: "0%",
-      }
-    ]
-
-    for (var i in printers) {
-      var printerTemplate = $(data).clone();
-
-      $(printerTemplate).find(".card-img-top").attr('src',printers[i].printerIcon);
-      $(printerTemplate).find(".avatar img").attr('src',printers[i].filamentIcon);
-      $(printerTemplate).find(".chip img").attr('src',printers[i].jobIcon);
-      $(printerTemplate).find(".chip img").attr('src',printers[i].jobIcon);
-      $(printerTemplate).find(".card-body h4").html(printers[i].statusText);
-      $(printerTemplate).find(".chip span").html(printers[i].jobTitle);
-
-      $(printerTemplate).find(".progress-bar").css('width',printers[i].progress + '%');
-
-      //for flipping
-      console.log($(printerTemplate).find(".card-rotating").prop("id"),"card-"+i);
-
-      // $(printerTemplate).find(".card-rotating").prop("id","card-"+i);
-      // $(printerTemplate).find(".rotate-btn").attr("data-card","card-"+i);
-
-      $(printerTemplate).find(".btnPrint").click(function() {
-        // $("#modalSlicer").modal('show');
-        location = "#tekeningen";
-      });
-
-
-
-
-      if (printers[i].status=='idle') {
-        $(printerTemplate).find(".btnPrint").show();
-        $(printerTemplate).find(".btnStop").hide();
-        $(printerTemplate).find(".progress").hide();
-        $(printerTemplate).find(".chip").hide();
-      } else {
-        $(printerTemplate).find(".btnPrint").hide();
-        $(printerTemplate).find(".btnStop").show();
-        $(printerTemplate).find(".progress").show();
-        $(printerTemplate).find(".rotate-btn").hide();
-        
-      }
-
-
-
-      // bg-danger
-
-      $("#printers").append(printerTemplate);
+    if (printers[i].status=='idle') {
+      $(printerTemplate).find(".btnPrint").show();
+      $(printerTemplate).find(".btnStop").hide();
+      $(printerTemplate).find(".progress").hide();
+      $(printerTemplate).find(".chip").hide();
+    } else {
+      $(printerTemplate).find(".btnPrint").hide();
+      $(printerTemplate).find(".btnStop").show();
+      $(printerTemplate).find(".progress").show();
+      $(printerTemplate).find(".rotate-btn").hide();      
     }
 
-  },"html");
+    $("#printers").append(printerTemplate);
+  }
+}
+
+$.get("printer.html",function(tpl, textStatus) {
+  $.get(window.settings.ip + "/printers", function(printers, status) {
+    window.data.printers = printers;
+    updatePrinters(tpl, printers);
+  });
+},"html");
 
 
 </script>

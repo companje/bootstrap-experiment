@@ -1,42 +1,28 @@
 <div>
   <a name="tekeningen"></a>
-
   <h2>Tekeningen</h2>
-
-
   <div id="doodles" class="row">
-      
-
   </div> <!--row-->
-
 </div>
 
 
 <script>
 
-  $.get("doodle.html",function(data, textStatus) {
-
-    var doodles = [
-      {  title: "Firetruck", author: "Nico", thumb: "img/sketches/firetruck.png" },
-      {  title: "Nissan", author: "Nico", thumb: "img/sketches/nissan.png" },
-      {  title: "Robot", author: "Nico", thumb: "img/sketches/robot.png" },
-      {  title: "Wheel", author: "Rick", thumb: "img/sketches/wheel.png" },
-      {  title: "NES Controller", author: "Rick", thumb: "img/sketches/2.png" },
-      {  title: "Car", author: "Nico", thumb: "img/sketches/3.png" },
-      {  title: "Dino", author: "Rick", thumb: "img/sketches/4.png" },
-      {  title: "Robot", author: "Rick", thumb: "img/sketches/5.png" }
-    ]
-
+  function updateDoodles(tpl, doodles) {
     for (var i in doodles) {
-      var tpl = $(data).clone();
+      var tpl = $(tpl).clone();
       $(tpl).find(".card-img-top").attr('src',doodles[i].thumb);
       $(tpl).find(".card-title").html(doodles[i].title);
-      $(tpl).find(".card-text").html('door' + doodles[i].author);
+      $(tpl).find(".card-text").html('door ' + doodles[i].author);
       $("#doodles").append(tpl);
     }
+  }
 
-
-
+  $.get("doodle.html",function(tpl, textStatus) {
+    $.get(window.settings.ip + "/files", function(files, status) {
+      window.data.files = files;
+      updateDoodles(tpl, files);
+    });
   });
 
-
+</script>
