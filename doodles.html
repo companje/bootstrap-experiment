@@ -1,0 +1,25 @@
+<a name="tekeningen"></a>
+<h2>Tekeningen</h2>
+<div id="doodles" class="row">
+</div> <!--row-->
+
+<script>
+
+function updateDoodles(tpl, doodles) {
+  for (var i in doodles) {
+    var tpl = $(tpl).clone();
+    $(tpl).find(".card-img-top").attr('src',doodles[i].thumb);
+    $(tpl).find(".card-title").html(doodles[i].title);
+    $(tpl).find(".card-text").html('door ' + doodles[i].author);
+    $("#doodles").append(tpl);
+  }
+}
+
+$.get("doodle.html",function(tpl, textStatus) {
+  $.get(window.settings.ip + "/files", function(files, status) {
+    window.data.files = files;
+    updateDoodles(tpl, files);
+  });
+});
+
+</script>

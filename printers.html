@@ -1,0 +1,57 @@
+<!-- printers -->
+<section class="my-5">
+  <h1>Printers</h1>
+  <div id="printers" class="row bg-white pt-4 pb-4"></div>
+</section>
+
+<script>
+
+function updatePrinters(tpl, printers) {
+  for (var i in printers) {
+    var view = $(tpl).clone();
+    var data = printers[i];
+
+    $(view).prop('data',data);
+    $(view).find(".card-img-top").attr('src',data.printerIcon);
+    $(view).find(".avatar img").attr('src',data.filamentIcon);
+    $(view).find(".chip img").attr('src',data.jobIcon);
+    $(view).find(".chip img").attr('src',data.jobIcon);
+    $(view).find(".card-body h4").html(data.statusText);
+    $(view).find(".chip span").html(data.jobTitle);
+    $(view).find(".progress-bar").css('width',data.progress + '%');
+
+    if (data.status=='idle') {
+      $(view).find(".btnPrint").show();
+      $(view).find(".btnStop").hide();
+      $(view).find(".progress").hide();
+      $(view).find(".chip").hide();
+    } else {
+      $(view).find(".btnPrint").hide();
+      $(view).find(".btnStop").show();
+      $(view).find(".btnStop").click(stopPrint);
+      $(view).find(".progress").show();
+      $(view).find(".rotate-btn").hide();      
+    }
+
+    $("#printers").append(view);
+  }
+}
+
+function stopPrint() {
+  var view = $(this).closest(".printer");
+  var data = view.prop("data");
+
+  $.post(window.settings.ip + "/printers/stop/" + data.id, function(res, status) {
+    console.log('post',res, status);
+  })
+  // console.log('stopPrint',data.id);
+}
+
+$.get("printer.html",function(tpl, textStatus) {
+  $.get(window.settings.ip + "/printers", function(printers, status) {
+    window.data.printers = printers;
+    updatePrinters(tpl, printers);
+  });
+},"html");
+
+</script>

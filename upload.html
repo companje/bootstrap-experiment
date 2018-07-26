@@ -1,0 +1,14 @@
+<html>
+  <body>
+    <form ref='uploadForm' 
+      id='uploadForm' 
+      action='http://localhost:3000/files/upload' 
+      method='post' 
+      encType="multipart/form-data">
+        name: <input type="text" name="name" placeholder="name" /><br>
+        thumb: <input type="file" name="thumb" /><br>
+        sketch: <input type="file" name="sketch" /><br>
+        <input type='submit' value='Upload!' />
+    </form>     
+  </body>
+</html>
